@@ -1,0 +1,11 @@
+[project]
+name = "iav"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.6.4",
+    "matplotlib>=3.11.2",
+    "pandas>=3.0.6",
+    "python-dotenv>=1.2.3",
+    "torch>=2.14.0",
+]
