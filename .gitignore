@@ -1,0 +1,13 @@
+# Ignore IDE files
+.idea
+models
+
+# Ignore virtual environment directories
+.venv
+
+# Ignore input and output directories
+data
+output
+
+# Ignore environment variables
+.env
