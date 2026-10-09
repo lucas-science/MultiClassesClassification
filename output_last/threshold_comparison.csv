@@ -1,2 +1,0 @@
-experiment,best_threshold,f1_macro,f1_micro,precision_macro,recall_macro,f1_leaderboard
-resnet50_pretrained_finetune,0.9000000000000002,0.6192052914583657,0.6525745065381481,0.5919744397309759,0.6944594149191967,0.49646756067691744
