@@ -1,0 +1,2 @@
+experiment,backbone,pretrained,freeze_backbone,loss,lr,epochs_run,best_val_loss,f1_macro_at_0.5,f1_micro,precision_macro,recall_macro,inverse_frequency_weighted_f1,seconds,best_threshold,f1_leaderboard,f1_macro_tuned
+resnet50_pretrained_finetune,resnet50,True,False,weighted_bce,0.0001,10,0.39036270845853366,0.46369307112623853,0.4914437712427959,0.33272423978085,0.892650647004994,0.34781916651767225,3857.2212941646576,0.9000000000000002,0.49646756067691744,0.6192052914583657
