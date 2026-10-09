@@ -2,6 +2,7 @@ from pathlib import Path
 
 from PIL import Image
 import torch
+import torch.nn as nn
 
 
 CLASSES = (
@@ -160,3 +161,31 @@ class TransformSubset(torch.utils.data.Dataset):
         ]
         labels = torch.zeros(80).scatter_(0, torch.tensor(labels), value=1)
         return self.transform(image), labels
+
+
+class AsymmetricLoss(nn.Module):
+    """Asymmetric loss for imbalanced multi-label classification."""
+
+    def __init__(self, gamma_neg=4.0, gamma_pos=1.0, clip=0.05, eps=1e-8):
+        super().__init__()
+        self.gamma_neg = gamma_neg
+        self.gamma_pos = gamma_pos
+        self.clip = clip
+        self.eps = eps
+
+    def forward(self, logits, targets):
+        probabilities = torch.sigmoid(logits)
+        probabilities_neg = 1.0 - probabilities
+        if self.clip > 0:
+            probabilities_neg = (probabilities_neg + self.clip).clamp(max=1.0)
+
+        loss = targets * torch.log(probabilities.clamp(min=self.eps))
+        loss += (1.0 - targets) * torch.log(probabilities_neg.clamp(min=self.eps))
+
+        if self.gamma_neg > 0 or self.gamma_pos > 0:
+            probabilities_t = probabilities * targets + probabilities_neg * (
+                1.0 - targets
+            )
+            gamma = self.gamma_pos * targets + self.gamma_neg * (1.0 - targets)
+            loss *= (1.0 - probabilities_t).pow(gamma)
+        return -loss.mean()
