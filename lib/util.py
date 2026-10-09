@@ -152,7 +152,7 @@ class TransformSubset(torch.utils.data.Dataset):
         return len(self.subset)
 
     def __getitem__(self, index):
-        label_path = self.subset.dataset.img_labels[index]
+        label_path = self.subset.dataset.img_labels[self.subset.indices[index]]
         image = Image.open(
             self.subset.dataset.img_dir / f"{label_path.stem}.jpg"
         ).convert("RGB")
